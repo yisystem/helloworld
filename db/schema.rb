@@ -14,23 +14,24 @@
 ActiveRecord::Schema.define(version: 20160317065647) do
 
   create_table "articles", force: :cascade do |t|
-    t.string   "title"
-    t.text     "body"
+    t.string   "title",      limit: 255
+    t.text     "body",       limit: 65535
     t.datetime "post_date"
     t.boolean  "is_public"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
-  add_index "articles", ["user_id"], name: "index_articles_on_user_id"
+  add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "gender"
+    t.string   "name",       limit: 255
+    t.integer  "gender",     limit: 4
     t.date     "birthday"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
+  add_foreign_key "articles", "users"
 end
